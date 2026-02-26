@@ -2,12 +2,12 @@ import { createClient } from '@supabase/supabase-js';
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || '';
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
-if (!supabaseUrl || !supabaseAnonKey || 
-    supabaseUrl === 'your_supabase_project_url_here' || 
-    supabaseAnonKey === 'your_supabase_anon_key_here') {
-  console.error('⚠️  Supabase environment variables are not configured properly.');
-  console.error('Please update your .env file with your actual Supabase credentials.');
-  console.error('You can find these in your Supabase project dashboard under Settings > API');
+
+if (!supabaseUrl || !supabaseAnonKey) {
+  console.error('⚠️  Supabase environment variables are missing.');
+  console.error('Please check your .env file for VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY');
+} else {
+  console.log('✅ Supabase configured successfully');
 }
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);

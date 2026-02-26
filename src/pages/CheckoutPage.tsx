@@ -151,7 +151,7 @@ const CheckoutPage: React.FC = () => {
 
       script.onload = () => {
         const options = {
-          key: 'rzp_test_1234567890', // Replace with your Razorpay key
+          key: import.meta.env.VITE_RAZORPAY_KEY_ID,
           amount: total * 100, // Amount in paise
           currency: 'INR',
           name: 'RegionalMart',
