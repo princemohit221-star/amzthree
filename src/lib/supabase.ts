@@ -7,7 +7,6 @@ if (!supabaseUrl || !supabaseAnonKey) {
   throw new Error('Missing Supabase environment variables. Please check your .env file.');
 }
 
-
 export type Database = {
   public: {
     Tables: {
@@ -81,3 +80,6 @@ export type Database = {
     };
   };
 };
+
+// ✅ ADD THIS
+export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey);
