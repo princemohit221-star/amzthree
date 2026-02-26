@@ -19,12 +19,13 @@ const AccountDashboard: React.FC = () => {
   const fetchUserData = async () => {
     try {
       // Fetch user profile
-      const { data: profile } = await supabase
+      const { data: profiles } = await supabase
         .from('users')
         .select('*')
         .eq('auth_id', user?.id)
-        .single();
+        .limit(1);
 
+      const profile = profiles && profiles.length > 0 ? profiles[0] : null;
       setUserProfile(profile);
 
       // Fetch recent orders (mock data for now)

@@ -30,22 +30,23 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, onProductUpdate 
     if (!user) return;
 
     try {
-      const { data: profile } = await supabase
+      const { data: profiles } = await supabase
         .from('users')
         .select('id')
         .eq('auth_id', user.id)
-        .single();
+        .limit(1);
 
+      const profile = profiles && profiles.length > 0 ? profiles[0] : null;
       if (!profile) return;
 
-      const { data } = await supabase
+      const { data: wishlistItems } = await supabase
         .from('wishlist')
         .select('id')
         .eq('user_id', profile.id)
         .eq('product_id', product.id)
-        .single();
+        .limit(1);
 
-      setIsInWishlist(!!data);
+      setIsInWishlist(wishlistItems && wishlistItems.length > 0);
     } catch (error) {
       // Not in wishlist or error
       setIsInWishlist(false);

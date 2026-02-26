@@ -69,11 +69,13 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const getOrCreateCart = async (userId: string) => {
     // Check if user has a cart
-    let { data: cart } = await supabase
+    let { data: carts } = await supabase
       .from('carts')
       .select('id')
       .eq('user_id', userId)
-      .single();
+      .limit(1);
+
+    let cart = carts && carts.length > 0 ? carts[0] : null;
 
     if (!cart) {
       // Create new cart
@@ -135,13 +137,14 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       console.log('Cart found/created:', cart);
 
       // Check if item already exists in cart
-      const { data: existingItem } = await supabase
+      const { data: existingItems } = await supabase
         .from('cart_items')
         .select('*')
         .eq('cart_id', cart.id)
         .eq('variant_id', variantId)
-        .single();
+        .limit(1);
 
+      const existingItem = existingItems && existingItems.length > 0 ? existingItems[0] : null;
       console.log('Existing item:', existingItem);
 
       if (existingItem) {

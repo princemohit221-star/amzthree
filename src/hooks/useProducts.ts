@@ -16,6 +16,9 @@ export const useProducts = (categorySlug?: string, limit?: number) => {
       setLoading(true);
       setError(null);
 
+      // Add a small delay to ensure environment variables are loaded
+      await new Promise(resolve => setTimeout(resolve, 100));
+
       let query = supabase
         .from('products')
         .select(`
